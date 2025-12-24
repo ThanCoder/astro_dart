@@ -1,18 +1,20 @@
-import 'package:astro_dart/core/html_element.dart';
-import 'package:astro_dart/core/js/js_call.dart';
-import 'package:astro_dart/core/text.dart';
+import 'package:astro_dart/core/elements/html_element.dart';
+import 'package:astro_dart/core/widgets/text.dart';
 
 class Button extends HtmlElement {
   final String text;
-  final JsCall? onClick;
-  Button({required this.text, this.onClick}) : super(child: Text(text));
+
+  Button({
+    required this.text,
+    super.onEvent,
+    super.attributes,
+    super.customClass,
+    super.id,
+    super.style,
+  }) : super(child: Text(text));
 
   @override
   String render() {
-    final onClickAttr = onClick != null
-        ? ' onclick="${onClick!.expression}"'
-        : '';
-
-    return '<button$onClickAttr>$text</button>';
+    return '<button $getEventSelector$attrStr>$text</button>';
   }
 }

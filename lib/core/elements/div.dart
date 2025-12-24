@@ -1,10 +1,12 @@
-import 'package:astro_dart/core/html_element.dart';
+import 'package:astro_dart/core/elements/tag_element.dart';
 
-class Div extends HtmlElement {
-  Div({required super.child});
-
-  @override
-  String render() {
-    return '<div>${child.render()}</div>';
-  }
+class Div extends TagElement {
+  Div({
+    super.id,
+    super.customClass,
+    super.style,
+    super.attributes,
+    super.onEvent,
+    required super.child,
+  }) : super(tag: 'div');
 }

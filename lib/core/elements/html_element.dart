@@ -1,12 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:astro_dart/core/js/js_event.dart';
+import 'package:astro_dart/core/js/js_event_binding.dart';
 import 'package:astro_dart/core/styles/css_collector.dart';
 import 'package:astro_dart/core/styles/css_style.dart';
 import 'package:astro_dart/core/widgets/html_widget.dart';
 
 abstract class HtmlElement extends HtmlWidget {
-  final HtmlWidget child;
+  final HtmlWidget? child;
 
-  final CssProperty? scopedStyle;
+  final CssProperty? style;
 
   /// Auto-generated unique scoped class
   late final String scopedId;
@@ -20,22 +21,44 @@ abstract class HtmlElement extends HtmlWidget {
   /// Optional user-defined custom class
   final String? customClass;
 
+  CssStyle? _scopedStyle;
+
+  final List<JsEvent> onEvent;
+
+  late final List<JsEventBinding> _bindings;
+  late final String _eventId;
+
   HtmlElement({
-    required this.child,
-    this.scopedStyle,
+    this.child,
+    this.style,
     this.id,
     this.attributes,
     this.customClass,
+    this.onEvent = const [],
   }) {
     // scoped style id generate
     // Generate unique scoped class if scopedStyle exists
-    if (scopedStyle != null && scopedStyle!.map.isNotEmpty) {
+    if (style != null && style!.map.isNotEmpty) {
       scopedId = ScopeId.next();
-      CssCollector.add(CssStyle.scoped('.$scopedId', scopedStyle!).render());
+      _scopedStyle = CssStyle.scoped('.$scopedId', style!);
     } else {
       scopedId = '';
     }
+
+    _eventId = 'astro_ele_${ScopeId.next()}';
+
+    // register events
+    _bindings = onEvent
+        .map((e) => JsEventBinding(selector: '[$getEventSelector]', event: e))
+        .toList();
   }
+
+  /// event
+  List<JsEventBinding> get bindings => _bindings;
+  String get getEventSelector =>
+      onEvent.isNotEmpty ? 'data-eid="$_eventId"' : '';
+
+  CssStyle? get getScopedStyle => _scopedStyle;
 
   /// Render class/id/other attributes
   String get attrStr {
@@ -59,4 +82,6 @@ abstract class HtmlElement extends HtmlWidget {
     }
     return buffer.toString();
   }
+
+  // String get _classAttr => scopedId.isNotEmpty ? ' class="$scopedId"' : '';
 }
