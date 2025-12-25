@@ -1,7 +1,8 @@
-import 'package:astro_dart/core/elements/column_element.dart';
+import 'package:astro_dart/core/elements/widgets/column_widget.dart';
 import 'package:astro_dart/core/elements/html_element.dart';
 import 'package:astro_dart/core/elements/inputs/input_form.dart';
-import 'package:astro_dart/core/elements/row_element.dart';
+import 'package:astro_dart/core/elements/widgets/grid_widget.dart';
+import 'package:astro_dart/core/elements/widgets/row_widget.dart';
 import 'package:astro_dart/core/pages/page_props.dart';
 import 'package:astro_dart/core/styles/css_style.dart';
 import 'package:astro_dart/core/widgets/html_widget.dart';
@@ -16,24 +17,30 @@ abstract class HtmlPage extends HtmlWidget {
     if (widget is CssStyle) {
       outCss.add(widget);
     }
-    if (widget is HtmlElement && widget.child != null) {
+    if (widget is HtmlElement) {
       if (widget.getScopedStyle != null) {
         outCss.add(widget.getScopedStyle!);
       }
-      // loop
-      _collectCsss(widget.child!, outCss);
+      if (widget.child != null) {
+        _collectCsss(widget.child!, outCss);
+      }
     }
     if (widget is ListWidget) {
       for (final item in widget.children) {
         _collectCsss(item, outCss);
       }
     }
-    if (widget is ColumnElement) {
+    if (widget is ColumnWidget) {
       for (final item in widget.children) {
         _collectCsss(item, outCss);
       }
     }
-    if (widget is RowElement) {
+    if (widget is RowWidget) {
+      for (final item in widget.children) {
+        _collectCsss(item, outCss);
+      }
+    }
+    if (widget is GridWidget) {
       for (final item in widget.children) {
         _collectCsss(item, outCss);
       }
@@ -41,11 +48,13 @@ abstract class HtmlPage extends HtmlWidget {
   }
 
   void _collectEvents(HtmlWidget widget, List<HtmlWidget> out) {
-    if (widget is HtmlElement && widget.child != null) {
+    if (widget is HtmlElement) {
       if (widget.bindings.isNotEmpty) {
         out.addAll(widget.bindings);
       }
-      _collectEvents(widget.child!, out);
+      if (widget.child != null) {
+        _collectEvents(widget.child!, out);
+      }
     }
 
     if (widget is ListWidget) {
@@ -58,12 +67,17 @@ abstract class HtmlPage extends HtmlWidget {
         _collectEvents(w, out);
       }
     }
-    if (widget is ColumnElement) {
+    if (widget is ColumnWidget) {
       for (final item in widget.children) {
         _collectEvents(item, out);
       }
     }
-    if (widget is RowElement) {
+    if (widget is RowWidget) {
+      for (final item in widget.children) {
+        _collectEvents(item, out);
+      }
+    }
+    if (widget is GridWidget) {
       for (final item in widget.children) {
         _collectEvents(item, out);
       }

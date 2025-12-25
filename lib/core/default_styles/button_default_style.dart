@@ -1,3 +1,4 @@
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_style.dart';
 
 final buttonDefaultStyle = CssStyle.global(

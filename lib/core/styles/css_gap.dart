@@ -1,4 +1,4 @@
-import 'package:astro_dart/core/styles/css_style.dart';
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_unit.dart';
 
 sealed class CssGap {

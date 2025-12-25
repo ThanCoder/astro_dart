@@ -1,3 +1,4 @@
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_unit.dart';
 
 sealed class MarginValue {
@@ -47,4 +48,8 @@ class Margin extends MarginValue {
 
   @override
   String get css => '${top.css} ${right.css} ${bottom.css} ${left.css}';
+}
+
+extension MarginCssProperty on CssProperty {
+  CssProperty margin(Margin value) => add('margin', value.css);
 }

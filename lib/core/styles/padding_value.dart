@@ -1,3 +1,4 @@
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_unit.dart';
 
 sealed class PaddingValue {
@@ -47,4 +48,8 @@ class Padding extends PaddingValue {
 
   @override
   String get css => '${top.css} ${right.css} ${bottom.css} ${left.css}';
+}
+
+extension PaddingCssProperty on CssProperty {
+  CssProperty padding(Padding value) => add('padding', value.css);
 }

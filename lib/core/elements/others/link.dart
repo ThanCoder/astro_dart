@@ -11,9 +11,11 @@ class Link extends HtmlElement {
     Map<String, String>? attributes,
     super.style,
     super.onEvent,
+    super.readOnly,
+    super.disabled,
+    this.target,
     required this.text,
     required this.href,
-    this.target,
   }) : super(
          attributes: {
            if (attributes != null) ...attributes,
@@ -22,7 +24,7 @@ class Link extends HtmlElement {
        );
   @override
   String render() {
-    return '<a href="$href" $getEventSelector$attrStr>$text</a>';
+    return '<a href="$href" $attrStr>$text</a>';
   }
 }
 

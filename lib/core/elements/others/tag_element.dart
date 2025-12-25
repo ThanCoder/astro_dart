@@ -8,12 +8,14 @@ class TagElement extends HtmlElement {
     super.attributes,
     super.style,
     super.onEvent,
+    super.child,
+    super.readOnly,
+    super.disabled,
     required this.tag,
-    required super.child,
   });
 
   @override
   String render() {
-    return '<$tag $getEventSelector$attrStr>${child?.render()}</$tag>';
+    return '<$tag $attrStr>${child?.render()}</$tag>';
   }
 }

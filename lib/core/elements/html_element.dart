@@ -1,6 +1,7 @@
 import 'package:astro_dart/core/js/js_event.dart';
 import 'package:astro_dart/core/js/js_event_binding.dart';
 import 'package:astro_dart/core/styles/css_collector.dart';
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_style.dart';
 import 'package:astro_dart/core/widgets/html_widget.dart';
 
@@ -27,6 +28,8 @@ abstract class HtmlElement extends HtmlWidget {
 
   late final List<JsEventBinding> _bindings;
   late final String _eventId;
+  final bool readOnly;
+  final bool disabled;
 
   HtmlElement({
     this.child,
@@ -34,11 +37,13 @@ abstract class HtmlElement extends HtmlWidget {
     this.id,
     this.attributes,
     this.customClass,
+    this.readOnly = false,
+    this.disabled = false,
     this.onEvent = const [],
   }) {
     // scoped style id generate
     // Generate unique scoped class if scopedStyle exists
-    if (style != null && style!.map.isNotEmpty) {
+    if (style != null) {
       scopedId = ScopeId.next();
       _scopedStyle = CssStyle.scoped('.$scopedId', style!);
     } else {
@@ -63,6 +68,10 @@ abstract class HtmlElement extends HtmlWidget {
   /// Render class/id/other attributes
   String get attrStr {
     final buffer = StringBuffer();
+    // event
+    if (getEventSelector.isEmpty) {
+      buffer.write(getEventSelector);
+    }
 
     // Classes: scoped + custom
     final classes = [
@@ -74,14 +83,24 @@ abstract class HtmlElement extends HtmlWidget {
     // id
     if (id != null) buffer.write(' id="$id"');
 
+    // default attributes
+    final allAttributes = attributes ?? {};
+    // set default
+    if (readOnly) {
+      allAttributes['readonly'] = 'true';
+    }
+    if (disabled) {
+      allAttributes['disabled'] = 'true';
+    }
+
     // Other attributes
     if (attributes != null) {
-      attributes!.forEach((key, value) {
-        buffer.write(' $key="$value"');
-      });
+      allAttributes.addAll(attributes!);
     }
+
+    allAttributes.forEach((key, value) {
+      buffer.write(' $key="$value"');
+    });
     return buffer.toString();
   }
-
-  // String get _classAttr => scopedId.isNotEmpty ? ' class="$scopedId"' : '';
 }

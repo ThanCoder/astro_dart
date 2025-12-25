@@ -1,3 +1,5 @@
+import 'package:astro_dart/core/styles/css_property.dart';
+
 enum AlignItems {
   start,
   center,
@@ -10,4 +12,8 @@ enum AlignItems {
     AlignItems.end => 'flex-end',
     AlignItems.stretch => 'stretch',
   };
+}
+
+extension AlignItemsCssProperty on CssProperty {
+  CssProperty alignItems(AlignItems value) => add('align-items', value.css);
 }

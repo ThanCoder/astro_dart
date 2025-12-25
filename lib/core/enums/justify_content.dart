@@ -1,3 +1,5 @@
+import 'package:astro_dart/core/styles/css_property.dart';
+
 enum JustifyContent {
   start,
   center,
@@ -22,4 +24,9 @@ enum JustifyContent {
         return 'space-evenly';
     }
   }
+}
+
+extension JustifyContentCssProperty on CssProperty {
+  CssProperty justifyContent(JustifyContent value) =>
+      add('justify-content', value.css);
 }

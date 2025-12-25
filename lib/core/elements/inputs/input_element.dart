@@ -23,6 +23,6 @@ class InputElement extends HtmlElement {
 
   @override
   String render() {
-    return '<input type="${type.value}" $getEventSelector$attrStr/>';
+    return '<input type="${type.value}" $attrStr/>';
   }
 }

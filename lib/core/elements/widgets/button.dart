@@ -1,5 +1,4 @@
 import 'package:astro_dart/core/elements/html_element.dart';
-import 'package:astro_dart/core/widgets/text.dart';
 
 class Button extends HtmlElement {
   final String text;
@@ -11,10 +10,12 @@ class Button extends HtmlElement {
     super.customClass,
     super.id,
     super.style,
-  }) : super(child: Text(text));
+    super.readOnly,
+    super.disabled,
+  }) : super();
 
   @override
   String render() {
-    return '<button $getEventSelector$attrStr>$text</button>';
+    return '<button $attrStr>$text</button>';
   }
 }

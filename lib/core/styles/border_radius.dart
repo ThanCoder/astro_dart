@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:astro_dart/core/styles/css_property.dart';
 import 'package:astro_dart/core/styles/css_unit.dart';
 
 sealed class BorderRadiusValue {
@@ -37,4 +38,9 @@ class BorderRadius extends BorderRadiusValue {
   @override
   String get css =>
       '${topLeft.css} ${topRight.css} ${bottomRight.css} ${bottomLeft.css}';
+}
+
+extension BorderRadiusCssProperty on CssProperty {
+  CssProperty borderRadius(BorderRadius value) =>
+      add('border-radius', value.css);
 }

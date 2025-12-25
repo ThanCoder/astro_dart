@@ -17,7 +17,7 @@ class InputForm extends HtmlElement {
   @override
   String render() {
     return '''
-<form method="${method.name}" action="#">
+<form method="${method.name}" action="#" $attrStr>
     ${children.map((e) => e.render()).join('\n')}
 </form>
   ''';

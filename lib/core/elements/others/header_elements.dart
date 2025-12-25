@@ -1,4 +1,4 @@
-import 'package:astro_dart/core/elements/tag_element.dart';
+import 'package:astro_dart/core/elements/others/tag_element.dart';
 
 class H1 extends TagElement {
   H1({
@@ -7,6 +7,8 @@ class H1 extends TagElement {
     super.style,
     super.onEvent,
     super.attributes,
+    super.readOnly,
+    super.disabled,
     required super.child,
   }) : super(tag: 'h1');
 }
@@ -18,6 +20,8 @@ class H2 extends TagElement {
     super.style,
     super.attributes,
     super.onEvent,
+    super.readOnly,
+    super.disabled,
     required super.child,
   }) : super(tag: 'h2');
 }
@@ -29,6 +33,8 @@ class H3 extends TagElement {
     super.style,
     super.attributes,
     super.onEvent,
+    super.readOnly,
+    super.disabled,
     required super.child,
   }) : super(tag: 'h3');
 }
@@ -40,6 +46,8 @@ class H4 extends TagElement {
     super.style,
     super.attributes,
     super.onEvent,
+    super.readOnly,
+    super.disabled,
     required super.child,
   }) : super(tag: 'h4');
 }

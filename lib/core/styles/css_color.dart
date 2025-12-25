@@ -1,4 +1,5 @@
 import 'package:astro_dart/core/enums/css_named_color.dart';
+import 'package:astro_dart/core/styles/css_property.dart';
 
 sealed class CssColor {
   const CssColor();
@@ -82,4 +83,10 @@ class CssMaterialColor extends CssColor {
 
   @override
   String get css => shades[_shade]!;
+}
+
+extension CssColorProperty on CssProperty {
+  CssProperty color(CssColor value) => add('color', value.css);
+  CssProperty backgroundColor(CssColor value) =>
+      add('background-color', value.css);
 }
